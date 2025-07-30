@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Imagine - Business Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #000;
+      font-size: 16px;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 10px 0;
+      z-index: 1000;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 10px 20px;
+      color: #000;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .dropdown.show .dropdown-content {
+      display: block;
+    }
+
+    .more-dropdown {
+      display: none;
+      margin-left: 15px;
+    }
+
+    .show-more {
+      display: block;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 60px 40px;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .hero-text h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .hero-text button {
+      background-color: #4e7eff;
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-image {
+      flex: 1;
+      text-align: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    /* Mobile menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background-color: black;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 250px;
+      height: 100%;
+      background-color: #fff;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      transition: right 0.3s ease;
+      z-index: 1001;
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu .close-btn {
+      font-size: 24px;
+      align-self: flex-end;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .mobile-menu a {
+      margin: 10px 0;
+      color: #000;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .hero {
+        flex-direction: column;
+        padding: 40px 20px;
+      }
+
+      .hero-text h1 {
+        font-size: 36px;
+      }
+
+      .hero-text p {
+        font-size: 16px;
+      }
+    }
+
+/* Apply blue hover to all anchor tags */
+a:hover {
+  color: #4e7eff;
+  transition: color 0.3s;
+}
+
+/* Apply blue background and shadow on main CTA button hover */
+.hero-text button:hover {
+  background-color: #3b64e0;
+  box-shadow: 0 8px 25px rgba(78, 126, 255, 0.3);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Ensure submenu links also get hover color */
+.dropdown-content a:hover,
+.more-dropdown a:hover,
+.mobile-menu a:hover {
+  color: #4e7eff;
+  background-color: #f5faff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+.features-section {
+  padding: 80px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 50px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 992px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feature-card {
+  background-color: #f7f7f7;
+  padding: 40px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  transition: all 0.6s ease;
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+.feature-card.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+
+.feature-icon {
+  font-size: 40px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-card:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.feature-card:hover .feature-icon {
+  background-color: #fff;
+  color: #007bff;
+}
+
+.feature-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #007bff;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.feature-card:hover a {
+  color: #fff;
+}
+
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">imagine<span style="color: blue;">.</span></div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <div class="dropdown" id="aboutDropdown">
+      <a href="#about">About Us</a>
+      <button class="dropdown-btn" onclick="toggleDropdown()">▸</button>
+      <div class="dropdown-content" id="aboutDropdownContent">
+        <a href="#our-team">Our Team</a>
+        <div>
+          <a href="#" onclick="toggleMoreLinks(event)">More Links ▸</a>
+          <div class="more-dropdown" id="moreLinks">
+            <a href="#">Menu One</a>
+            <a href="#">Menu Two</a>
+            <a href="#">Menu Three</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="menu-toggle" onclick="toggleMobileMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="close-btn" onclick="toggleMobileMenu()">✕</div>
+  <a href="#home">Home</a>
+  <a href="#features">Features</a>
+  <a href="#about">About Us</a>
+  <a href="#our-team">Our Team</a>
+  <a href="#">More Links ▸</a>
+  <a href="#testimonials">Testimonials</a>
+  <a href="#blog">Blog</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <h1>Make Your Business More Profitable</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam assumenda ea quo cupiditate facere deleniti fuga officia.</p>
+    <button onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">Get Started</button>
+  </div>
+  <div class="hero-image">
+    <img src="img.png" alt="Growth Chart Illustration">
+  </div>
+</section>
+
+
+<section id="features" class="features-section">
+  <div class="container">
+    <h2 class="section-title">Imagine Features</h2>
+    <p class="section-subtitle">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quos quaerat sapiente nam, id vero.
+    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Marketing Consulting</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis molestiae vitae eligendi at.</p>
+        <a href="#">Learn More</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏬</div>
+        <h3>Market Analysis</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis molestiae vitae eligendi at.</p>
+        <a href="#">Learn More</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛍️</div>
+        <h3>Easy Purchase</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis molestiae vitae eligendi at.</p>
+        <a href="#">Learn More</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔁</div>
+        <h3>Free Updates</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis molestiae vitae eligendi at.</p>
+        <a href="#">Learn More</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">😊</div>
+        <h3>100% Satisfied</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis molestiae vitae eligendi at.</p>
+        <a href="#">Learn More</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔌</div>
+        <h3>Easy Plugin</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quis molestiae vitae eligendi at.</p>
+        <a href="#">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  function toggleDropdown() {
+    document.getElementById("aboutDropdown").classList.toggle("show");
+  }
+
+  function toggleMoreLinks(event) {
+    event.preventDefault();
+    document.getElementById("moreLinks").classList.toggle("show-more");
+  }
+
+  // Mobile menu logic
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  function toggleMobileMenu() {
+    mobileMenu.classList.toggle("active");
+  }
+
+  // Close mobile menu when clicking outside
+  window.addEventListener("click", function(e) {
+    if (mobileMenu.classList.contains("active") && !mobileMenu.contains(e.target) && !e.target.closest(".menu-toggle")) {
+      mobileMenu.classList.remove("active");
+    }
+  });
+</script>
+
+<script>// Reveal animation for feature cards
+const cards = document.querySelectorAll('.feature-card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+cards.forEach(card => {
+  observer.observe(card);
+});
+</script>
+
+<script>
+  const featureCards = document.querySelectorAll('.feature-card');
+
+  const observer1 = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  featureCards.forEach(card => observer.observe(card));
+</script>
+
+<section class="feedback-section">
+  <div class="feedback-container">
+    <!-- Illustration -->
+    <div class="feedback-image">
+      <img src="img1.png" alt="Feedback Illustration">
+    </div>
+
+    <!-- Content -->
+    <div class="feedback-content">
+      <h2>Communicate and <br> gather feedback</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem neque nisi architecto autem molestias corrupti officia veniam.</p>
+
+      <div class="testimonial-card">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Grey Simpson">
+        <div class="testimonial-info">
+          <h4>Grey Simpson</h4>
+          <span>Co-Founder, XYZ Inc.</span>
+          <p>“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus vitae ipsa asperiores inventore aperiam iure?”</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* === Feedback Section Styles === */
+.feedback-section {
+  padding: 4rem 6%;
+  background-color: #fff;
+}
+
+.feedback-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: center;
+  gap: 4rem;
+}
+
+.feedback-image img {
+  width: 100%;
+  max-width: 500px;
+  animation: fadeInUp 1s ease forwards;
+  opacity: 0;
+}
+
+.feedback-content {
+  animation: fadeInUp 1.2s ease forwards;
+  opacity: 0;
+}
+
+.feedback-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.feedback-content p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.testimonial-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1.5rem 2rem;
+  background-color: #fff;
+  border-left: 5px solid #3b82f6;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.testimonial-card img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.testimonial-info h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.testimonial-info span {
+  display: block;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.testimonial-info p {
+  font-style: italic;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+  color: #444;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .testimonial-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .testimonial-info span,
+  .testimonial-info p {
+    text-align: center;
+  }
+}
+</style>
+
+</body>
+</html>
